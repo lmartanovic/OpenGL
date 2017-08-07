@@ -27,32 +27,9 @@ int main()
         return -1;
     }
 
-    Shader vs(ShaderType::VERTEX, "shader.vert");
-    Shader fs(ShaderType::FRAGMENT, "shader.frag");
+    fw::ShaderProgram shader({{fw::ShaderType::VERTEX, "shader.vert"},{fw::ShaderType::FRAGMENT, "shader.frag"}});
 
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vs.get_gl_object());
-    glAttachShader(program, fs.get_gl_object());
-    glLinkProgram(program);
-
-    GLint isLinked = 0;
-    glGetProgramiv(program, GL_LINK_STATUS, (int *)&isLinked);
-    if(isLinked == GL_FALSE)
-    {
-        GLint maxLength = 0;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
-    
-        //The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
-        glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
-
-        for(auto c : infoLog)
-        {
-            std::cout << c;
-        }
-    }
-
-    glUseProgram(program);
+    shader.use();
 
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -70,11 +47,11 @@ int main()
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    GLint posAttrib = glGetAttribLocation(program, "position");
+    GLint posAttrib = glGetAttribLocation(shader.get_gl_object(), "position");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GL_FLOAT), 0);
 
-    GLint colAttrib = glGetAttribLocation(program, "inColor");
+    GLint colAttrib = glGetAttribLocation(shader.get_gl_object(), "inColor");
     glEnableVertexAttribArray(colAttrib);
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GL_FLOAT), (void*)(2*sizeof(GL_FLOAT)));
 

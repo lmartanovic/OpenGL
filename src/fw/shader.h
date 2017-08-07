@@ -5,6 +5,9 @@
 
 #include <SFML/OpenGL.hpp>
 
+namespace fw
+{
+
 enum class ShaderType : char
 {
     VERTEX,
@@ -33,7 +36,20 @@ private:
     std::string source;
 };
 
-GLenum map_shader_type(ShaderType type);
-std::string print_shader_type(ShaderType type);
+using ShaderDef = std::pair<ShaderType, std::string>;
 
+class ShaderProgram
+{
+public:
+    ShaderProgram() = delete;
+    ShaderProgram(const std::vector<ShaderDef>& shaders);
+    ~ShaderProgram();
+
+    void use() const noexcept;
+    GLuint get_gl_object() const noexcept {return gl_object;}
+private:
+    GLuint gl_object {0};
+};
+
+} //namespace fw
 #endif

@@ -6,6 +6,9 @@
 
 #include "shader.h"
 
+namespace fw
+{
+
 /*
  * Utils
  */
@@ -20,45 +23,6 @@ std::string load_shader_file(const std::string& filename)
         retval += "\n";
     }
     return retval;
-}
-
-/*
- * Shader
- */
-Shader::Shader(ShaderType _type, const std::string& _src)
-{
-    //TODO error handling
-    source = load_shader_file(_src);
-    const char* s_ptr = source.c_str();
-    gl_object = glCreateShader(map_shader_type(_type));
-    glShaderSource(gl_object, 1, &s_ptr, nullptr);
-    glCompileShader(gl_object);
-
-    GLint isCompiled = 0;
-    glGetShaderiv(gl_object, GL_COMPILE_STATUS, &isCompiled);
-    if(isCompiled == GL_FALSE)
-    {
-        GLint maxLength = 0;
-        glGetShaderiv(gl_object, GL_INFO_LOG_LENGTH, &maxLength);
-    
-        // The maxLength includes the NULL character
-        std::vector<GLchar> errorLog(maxLength);
-        glGetShaderInfoLog(gl_object, maxLength, &maxLength, &errorLog[0]);
-        
-        // Provide the infolog in whatever manor you deem best.
-        for(auto c : errorLog)
-        {
-            std::cout << c;
-        }
-        // Exit with failure.
-        glDeleteShader(gl_object); // Don't leak the shader.
-        return;
-    }
-}
-
-Shader::~Shader()
-{
-    glDeleteShader(gl_object);
 }
 
 GLenum map_shader_type(ShaderType type)
@@ -109,3 +73,84 @@ std::string print_shader_type(ShaderType type)
     return "Unknown";
 }
 
+/*
+ * Shader
+ */
+Shader::Shader(ShaderType _type, const std::string& _src)
+{
+    //TODO error handling
+    source = load_shader_file(_src);
+    const char* s_ptr = source.c_str();
+    gl_object = glCreateShader(map_shader_type(_type));
+    glShaderSource(gl_object, 1, &s_ptr, nullptr);
+    glCompileShader(gl_object);
+
+    GLint isCompiled = 0;
+    glGetShaderiv(gl_object, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(gl_object, GL_INFO_LOG_LENGTH, &maxLength);
+    
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(gl_object, maxLength, &maxLength, &errorLog[0]);
+        
+        // Provide the infolog in whatever manor you deem best.
+        for(auto c : errorLog)
+        {
+            std::cout << c;
+        }
+        // Exit with failure.
+        glDeleteShader(gl_object); // Don't leak the shader.
+    }
+}
+
+Shader::~Shader()
+{
+    glDeleteShader(gl_object);
+}
+
+ShaderProgram::ShaderProgram(const std::vector<ShaderDef>& shaders)
+{
+    gl_object = glCreateProgram();
+    //TODO error check
+
+    for(const auto& sh : shaders)
+    {
+        Shader s(sh.first, sh.second);
+        glAttachShader(gl_object, s.get_gl_object());
+    }
+
+    glLinkProgram(gl_object);
+
+    GLint isLinked = 0;
+    glGetProgramiv(gl_object, GL_LINK_STATUS, (int *)&isLinked);
+    if(isLinked == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetProgramiv(gl_object, GL_INFO_LOG_LENGTH, &maxLength);
+        //The maxLength includes the NULL character
+        std::vector<GLchar> infoLog(maxLength);
+        glGetProgramInfoLog(gl_object, maxLength, &maxLength, &infoLog[0]);
+        
+        for(auto c : infoLog)
+        {
+            std::cout << c;
+        }
+
+        glDeleteProgram(gl_object);
+    }
+}
+
+ShaderProgram::~ShaderProgram()
+{
+    glDeleteProgram(gl_object);
+}
+
+void ShaderProgram::use() const noexcept
+{
+    glUseProgram(gl_object);
+}
+
+} //namespace fw

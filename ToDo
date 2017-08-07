@@ -1,13 +1,16 @@
 - shader program class
-    - constructor s vertex a fragment, ktory rovno spravi vsetko
-- README.md
+    - remove get_gl_object once no longer needed
+- remove shader class from the public header (leave only shaderprogram)
 - a Mesh class
     - load from array
-- a Model class
-    - vector of meshes
-    - a shader program
-- CMake
+- material class
+    - shader program (created by a factory based on a predefined or custom (enum))
+    - textures
 - a few of the eraly tutorials from learnopengl.com
 - texturing
 - KeyboardController
 - OFFSETOF template function
+- vim glsl syntax highlighting
+
+- Imgui pre GUI a hrajkanie sa
+- voda https://www.youtube.com/watch?v=0NH9k4zTAqk
