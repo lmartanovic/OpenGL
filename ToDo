@@ -1,8 +1,6 @@
 - shader program class
     - remove get_gl_object once no longer needed
 - remove shader class from the public header (leave only shaderprogram)
-- a Mesh class
-    - load from array
 - material class
     - shader program (created by a factory based on a predefined or custom (enum))
     - textures
