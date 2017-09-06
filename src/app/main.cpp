@@ -5,8 +5,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
 
-#include "shader.h"
 #include "mesh.h"
+#include "shader.h"
+#include "utils.h"
+#include "vertex.h"
 
 //std::vector<std::pair<ShaderType, const std::string&>> shaders;
 
@@ -32,12 +34,13 @@ int main()
 
     shader.use();
 
-    std::vector<fw::Vertex> points = {
-        { 0.45f,  0.45f, 0.0f, 1.0f, 0.0f, 0.0f},
-        {-0.45f,  0.45f, 0.0f, 0.0f, 1.0f, 0.0f},
-        { 0.45f, -0.45f, 0.0f, 0.0f, 0.0f, 1.0f},
-        {-0.45f, -0.45f, 0.0f, 1.0f, 0.0f, 0.0f}
-    };
+    //std::vector<fw::Vertex> points = {
+    //    { 0.45f,  0.45f, 0.0f, 1.0f, 0.0f, 0.0f},
+    //    {-0.45f,  0.45f, 0.0f, 0.0f, 1.0f, 0.0f},
+    //    { 0.45f, -0.45f, 0.0f, 0.0f, 0.0f, 1.0f},
+    //    {-0.45f, -0.45f, 0.0f, 1.0f, 0.0f, 0.0f}
+    //};
+    std::vector<fw::Vertex> points = fw::load_vertices_from_file("points.data");
 
     fw::Mesh quad(points);
     quad.enable_attribs(shader);

@@ -1,4 +1,5 @@
-set(FW_SOURCES shader.cpp)
+set(FW_SOURCES shader.cpp
+               utils.cpp)
 
 add_library(fw_lib STATIC ${FW_SOURCES})
 set_target_properties(fw_lib

@@ -9,7 +9,7 @@
 namespace fw
 {
 
-/*
+/**
  * Utils
  */
 std::string load_shader_file(const std::string& filename)
@@ -73,7 +73,7 @@ std::string print_shader_type(ShaderType type)
     return "Unknown";
 }
 
-/*
+/**
  * Shader
  */
 Shader::Shader(ShaderType _type, const std::string& _src)
@@ -111,6 +111,9 @@ Shader::~Shader()
     glDeleteShader(gl_object);
 }
 
+/**
+ * ShaderProgram
+ */
 ShaderProgram::ShaderProgram(const std::vector<ShaderDef>& shaders)
 {
     gl_object = glCreateProgram();
