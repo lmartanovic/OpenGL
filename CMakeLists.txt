@@ -3,7 +3,9 @@ project(OpenGL)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Wextra -Werror -pedantic")
+add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++17) #TODO use a compile feature for each target instead of hardcoded standard
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Wextra -Werror -Wpedantic")
 
 #set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
 set(SFML_LIB_ROOT "/usr/lib/x86_64-linux-gnu")
