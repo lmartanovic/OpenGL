@@ -32,7 +32,7 @@ public:
 
 private:
     ShaderType type;
-    GLuint gl_object {0};
+    unsigned int gl_object {0};
     std::string source;
 };
 
@@ -46,9 +46,9 @@ public:
     ~ShaderProgram();
 
     void use() const noexcept;
-    GLuint get_gl_object() const noexcept {return gl_object;}
+    unsigned int get_gl_object() const noexcept {return gl_object;}
 private:
-    GLuint gl_object {0};
+    unsigned int gl_object {0};
 };
 
 } //namespace fw

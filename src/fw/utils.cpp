@@ -22,11 +22,11 @@ std::vector<Vertex> load_vertices_from_file(const std::string& filename)
     std::string line;
     while(std::getline(ifs, line))
     {
+        //TODO make prettier
         std::stringstream str(line);
-        float x, y, z, r, g, b; //TODO ugly as sin - change
-        str >> x >> y >> z >> r >> g >> b;
+        auto& v = ret.emplace_back();
+        str >> v.x >> v.y >> v.z >> v.r >> v.g >> v.b;
 
-        ret.emplace_back(x, y, z, r, g, b);
     }
 
     return ret;

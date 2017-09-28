@@ -53,8 +53,8 @@ public:
     }
 
 private:
-    GLuint vbo {0};
-    GLuint vao {0};
+    unsigned int vbo {0};
+    unsigned int vao {0};
     std::vector<Vertex> vertices;
 };
 

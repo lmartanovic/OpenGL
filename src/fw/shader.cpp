@@ -85,15 +85,15 @@ Shader::Shader(ShaderType _type, const std::string& _src)
     glShaderSource(gl_object, 1, &s_ptr, nullptr);
     glCompileShader(gl_object);
 
-    GLint isCompiled = 0;
+    int isCompiled = 0;
     glGetShaderiv(gl_object, GL_COMPILE_STATUS, &isCompiled);
     if(isCompiled == GL_FALSE)
     {
-        GLint maxLength = 0;
+        int maxLength = 0;
         glGetShaderiv(gl_object, GL_INFO_LOG_LENGTH, &maxLength);
     
         // The maxLength includes the NULL character
-        std::vector<GLchar> errorLog(maxLength);
+        std::vector<char> errorLog(maxLength);
         glGetShaderInfoLog(gl_object, maxLength, &maxLength, &errorLog[0]);
         
         // Provide the infolog in whatever manor you deem best.
@@ -127,14 +127,14 @@ ShaderProgram::ShaderProgram(const std::vector<ShaderDef>& shaders)
 
     glLinkProgram(gl_object);
 
-    GLint isLinked = 0;
+    int isLinked = 0;
     glGetProgramiv(gl_object, GL_LINK_STATUS, &isLinked);
     if(isLinked == GL_FALSE)
     {
         GLint maxLength = 0;
         glGetProgramiv(gl_object, GL_INFO_LOG_LENGTH, &maxLength);
         //The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
+        std::vector<char> infoLog(maxLength);
         glGetProgramInfoLog(gl_object, maxLength, &maxLength, &infoLog[0]);
         
         for(auto c : infoLog)
