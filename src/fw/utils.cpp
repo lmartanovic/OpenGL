@@ -31,4 +31,25 @@ std::vector<Vertex> load_vertices_from_file(const std::string& filename)
 
     return ret;
 }
+
+std::vector<unsigned int> load_indices_from_file(const std::string& filename)
+{
+    std::vector<unsigned int> ret;
+
+    std::ifstream ifs(filename);
+    if(!ifs.is_open())
+    {
+        //TODO better error handling
+        std::cerr << "Unable to open the input file " << filename << '\n';
+        return ret;
+    }
+
+    unsigned int index {0};
+    while(ifs >> index)
+    {
+        ret.emplace_back(index);
+    }
+    
+    return ret;
+}
 } //namespace fw

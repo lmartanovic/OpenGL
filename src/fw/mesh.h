@@ -13,49 +13,57 @@ class Mesh
 {
 public:
     Mesh() = delete;
-    Mesh(const std::vector<Vertex>& _vertices) : vertices(_vertices)
+    Mesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices) : indices_count(_indices.size())
     {
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+
         glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, _vertices.size()*sizeof(Vertex), _vertices.data(), GL_STATIC_DRAW);
 
-        glGenVertexArrays(1, &vao);
+        glGenBuffers(1, &ebo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size()*sizeof(unsigned int), _indices.data(), GL_STATIC_DRAW);
+
+        glBindVertexArray(0); //Unbind first, as it stores other unbind calls
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     void enable_attribs(const ShaderProgram& shader) const
     {
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        GLint pos_attrib = glGetAttribLocation(shader.get_gl_object(), "position");
+        GLint pos_attrib = glGetAttribLocation(shader.get_gl_object(), "in_position");
         glEnableVertexAttribArray(pos_attrib);
         glVertexAttribPointer(pos_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 
         //TODO replace with UV
-        GLint col_attrib = glGetAttribLocation(shader.get_gl_object(), "inColor");
+        GLint col_attrib = glGetAttribLocation(shader.get_gl_object(), "in_color");
         glEnableVertexAttribArray(col_attrib);
         glVertexAttribPointer(col_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(3*sizeof(GL_FLOAT)));
 
-        glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
     void draw() const
     {
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
+
+        glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, 0);
 
         glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
 private:
-    unsigned int vbo {0};
     unsigned int vao {0};
-    std::vector<Vertex> vertices;
+    unsigned int vbo {0};
+    unsigned int ebo {0};
+    size_t indices_count {0};
 };
 
 } //namespace fw

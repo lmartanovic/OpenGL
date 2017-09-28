@@ -2,14 +2,14 @@
 
 layout (location = 0)
 
-in vec3 position;
-in vec3 inColor;
+in vec3 in_position;
+in vec3 in_color;
 
-out vec3 Color;
+out vec3 color;
 
 void main()
 {
-    Color = inColor;
-    gl_Position = vec4(position, 1.0);
+    color = in_color;
+    gl_Position = vec4(in_position, 1.0);
 }
 

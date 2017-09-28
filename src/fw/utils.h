@@ -9,6 +9,8 @@ namespace fw
     struct Vertex;
 
     std::vector<Vertex> load_vertices_from_file(const std::string& filename);
+
+    std::vector<unsigned int> load_indices_from_file(const std::string& filename);
 } //namespace fw
 
 #endif

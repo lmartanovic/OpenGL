@@ -34,15 +34,8 @@ int main()
 
     shader.use();
 
-    //std::vector<fw::Vertex> points = {
-    //    { 0.45f,  0.45f, 0.0f, 1.0f, 0.0f, 0.0f},
-    //    {-0.45f,  0.45f, 0.0f, 0.0f, 1.0f, 0.0f},
-    //    { 0.45f, -0.45f, 0.0f, 0.0f, 0.0f, 1.0f},
-    //    {-0.45f, -0.45f, 0.0f, 1.0f, 0.0f, 0.0f}
-    //};
-    std::vector<fw::Vertex> points = fw::load_vertices_from_file("points.data");
-
-    fw::Mesh quad(points);
+    fw::Mesh quad(fw::load_vertices_from_file("points.data"), 
+                  fw::load_indices_from_file("indices.data"));
     quad.enable_attribs(shader);
 
     // run the main loop
