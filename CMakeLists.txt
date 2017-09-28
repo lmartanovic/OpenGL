@@ -3,7 +3,7 @@ project(OpenGL)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-add_compile_options(-Wall -Wextra -Wpedantic -Werror -std=c++17) #TODO use a compile feature for each target instead of hardcoded standard
+add_compile_options(-Wall -Wextra -Wpedantic -Werror -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wold-style-cast -Wuseless-cast -Wshadow -std=c++17) #TODO use a compile feature for each target instead of hardcoded standard
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Wextra -Werror -Wpedantic")
 
