@@ -63,6 +63,18 @@ int main()
                 // adjust the viewport when the window is resized
                 glViewport(0, 0, event.size.width, event.size.height);
             }
+            //TODO implement a keyboard controller
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                switch(event.key.code)
+                {
+                    case sf::Keyboard::Escape:
+                        running = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         // clear the buffers

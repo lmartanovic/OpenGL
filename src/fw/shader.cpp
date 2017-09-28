@@ -128,7 +128,7 @@ ShaderProgram::ShaderProgram(const std::vector<ShaderDef>& shaders)
     glLinkProgram(gl_object);
 
     GLint isLinked = 0;
-    glGetProgramiv(gl_object, GL_LINK_STATUS, (int *)&isLinked);
+    glGetProgramiv(gl_object, GL_LINK_STATUS, &isLinked);
     if(isLinked == GL_FALSE)
     {
         GLint maxLength = 0;
