@@ -52,18 +52,14 @@ public:
 
     void add_color_texture(const Texture2D& c_tex)
     {
-        color_textures.emplace_back(c_tex);
+        color_texture = c_tex;
     }
 
     void draw() const
     {
         //color
-        //TODO ugly and dangerous
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, color_textures[0].get_gl_object());
-
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, color_textures[1].get_gl_object());
+        glBindTexture(GL_TEXTURE_2D, color_texture.get_gl_object());
 
         glBindVertexArray(vao);
 
@@ -80,7 +76,7 @@ private:
     unsigned int ebo {0};
     size_t indices_count {0};
 
-    std::vector<Texture2D> color_textures;
+    Texture2D color_texture;
 };
 
 } //namespace fw

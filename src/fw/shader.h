@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <glm/glm.hpp>
+
 #include <SFML/OpenGL.hpp>
 
 namespace fw
@@ -46,6 +48,7 @@ public:
     ~ShaderProgram();
 
     void set_uniform(const std::string& name, int value);
+    void set_uniform(const std::string& name, const glm::mat4& matrix);
     void use() const noexcept;
     unsigned int get_gl_object() const noexcept {return gl_object;}
 private:

@@ -4,6 +4,8 @@
 
 #include <GL/glew.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "shader.h"
 
 namespace fw
@@ -153,7 +155,14 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::set_uniform(const std::string& name, int value)
 {
-    glUniform1i(glGetUniformLocation(gl_object, name.c_str()), value);
+    glUniform1i(glGetUniformLocation(gl_object, name.c_str()),
+                value);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::mat4& matrix)
+{
+    glUniformMatrix4fv(glGetUniformLocation(gl_object, name.c_str()),
+                       1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 void ShaderProgram::use() const noexcept
