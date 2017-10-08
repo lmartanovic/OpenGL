@@ -151,6 +151,11 @@ ShaderProgram::~ShaderProgram()
     glDeleteProgram(gl_object);
 }
 
+void ShaderProgram::set_uniform(const std::string& name, int value)
+{
+    glUniform1i(glGetUniformLocation(gl_object, name.c_str()), value);
+}
+
 void ShaderProgram::use() const noexcept
 {
     glUseProgram(gl_object);

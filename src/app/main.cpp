@@ -7,6 +7,7 @@
 
 #include "mesh.h"
 #include "shader.h"
+#include "texture.h"
 #include "utils.h"
 #include "vertex.h"
 
@@ -15,7 +16,7 @@
 int main()
 {
     // create the window
-    sf::Window window(sf::VideoMode(800, 600), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
+    sf::Window window(sf::VideoMode(800, 600), "OpenGL", sf::Style::Default, sf::ContextSettings(32, 32, 0, 3, 3));
     window.setVerticalSyncEnabled(true);
 
     // activate the window
@@ -31,12 +32,19 @@ int main()
     }
 
     fw::ShaderProgram shader({{fw::ShaderType::VERTEX, "shader.vert"},{fw::ShaderType::FRAGMENT, "shader.frag"}});
-
+    //TODO this should be elsewhere
     shader.use();
+    shader.set_uniform("color_texture1", 0);
+    shader.set_uniform("color_texture2", 1);
+
+    fw::Texture2D color_texture1("wall.jpg");
+    fw::Texture2D color_texture2("tiger.jpg");
 
     fw::Mesh quad(fw::load_vertices_from_file("points.data"), 
                   fw::load_indices_from_file("indices.data"));
     quad.enable_attribs(shader);
+    quad.add_color_texture(color_texture1);
+    quad.add_color_texture(color_texture2);
 
     // run the main loop
     bool running = true;

@@ -28,7 +28,7 @@ public:
     std::string get_source() const noexcept {return source;}
 
     ShaderType get_type() const noexcept {return type;}
-    GLuint get_gl_object() const noexcept {return gl_object;}
+    unsigned int get_gl_object() const noexcept {return gl_object;}
 
 private:
     ShaderType type;
@@ -45,6 +45,7 @@ public:
     ShaderProgram(const std::vector<ShaderDef>& shaders);
     ~ShaderProgram();
 
+    void set_uniform(const std::string& name, int value);
     void use() const noexcept;
     unsigned int get_gl_object() const noexcept {return gl_object;}
 private:

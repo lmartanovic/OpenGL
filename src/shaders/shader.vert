@@ -1,15 +1,13 @@
 #version 330 core
 
-layout (location = 0)
+layout (location = 0) in vec3 in_position;
+layout (location = 1) in vec2 in_uv;
 
-in vec3 in_position;
-in vec3 in_color;
-
-out vec3 color;
+out vec2 uv;
 
 void main()
 {
-    color = in_color;
+    uv = in_uv;
     gl_Position = vec4(in_position, 1.0);
 }
 

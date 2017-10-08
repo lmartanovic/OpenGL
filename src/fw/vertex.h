@@ -7,16 +7,15 @@ namespace fw
 struct Vertex
 {
     Vertex() = default;
-    Vertex(float _x, float _y, float _z, float _r, float _g, float _b)
-    : x(_x), y(_y), z(_z), r(_r), g(_g), b(_b)
+    Vertex(float _x, float _y, float _z, float _u, float _v)
+    : x(_x), y(_y), z(_z), u(_u), v(_v)
     {}
 
     float x {};
     float y {};
     float z {};
-    float r {};
-    float g {};
-    float b {};
+    float u {};
+    float v {};
 };
 
 }//namespace fw

@@ -25,7 +25,7 @@ std::vector<Vertex> load_vertices_from_file(const std::string& filename)
         //TODO make prettier
         std::stringstream str(line);
         auto& v = ret.emplace_back();
-        str >> v.x >> v.y >> v.z >> v.r >> v.g >> v.b;
+        str >> v.x >> v.y >> v.z >> v.u >> v.v;
 
     }
 
